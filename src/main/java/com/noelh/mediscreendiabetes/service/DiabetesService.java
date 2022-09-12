@@ -50,6 +50,7 @@ public class DiabetesService {
         System.out.println(age);
 
         int foundedKeyword = countKeywordFound(noteList);
+        System.out.println(foundedKeyword);
 
         if (isPatientInDanger(sex, age, foundedKeyword)){
             return RiskLevelEnum.IN_DANGER;
@@ -69,8 +70,8 @@ public class DiabetesService {
     private int countKeywordFound(List<NoteBean> noteList) {
         int foundedKeyword = 0;
 
-        for (NoteBean note : noteList) {
-            if (KEYWORD.stream().anyMatch(s -> note.getNoteOfThePractitioner().contains(s))){
+        for (String keyword : KEYWORD) {
+            if (noteList.stream().anyMatch(noteBean -> noteBean.getNoteOfThePractitioner().contains(keyword))){
                 foundedKeyword++;
             }
         }
