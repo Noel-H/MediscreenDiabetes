@@ -1,5 +1,6 @@
 package com.noelh.mediscreendiabetes.controller;
 
+import com.noelh.mediscreendiabetes.enumeration.RiskLevelEnum;
 import com.noelh.mediscreendiabetes.service.DiabetesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class DiabetesController {
     }
 
     @GetMapping("/check/{id}")
-    public ResponseEntity<String> getDiabetesRiskLevel(@PathVariable("id") Long id) {
+    public ResponseEntity<RiskLevelEnum> getDiabetesRiskLevel(@PathVariable("id") Long id) {
         log.info("GET /diabetes/check/{}", id);
         try {
             return ResponseEntity.ok(diabetesService.getDiabetesRiskLevel(id));
