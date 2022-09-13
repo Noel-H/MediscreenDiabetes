@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DiabetesService {
@@ -71,7 +70,7 @@ public class DiabetesService {
         int foundedKeyword = 0;
 
         for (String keyword : KEYWORD) {
-            if (noteList.stream().anyMatch(noteBean -> noteBean.getNoteOfThePractitioner().contains(keyword))){
+            if (noteList.stream().anyMatch(noteBean -> noteBean.getNoteOfThePractitioner().toLowerCase().contains(keyword.toLowerCase()))){
                 foundedKeyword++;
             }
         }
@@ -81,17 +80,14 @@ public class DiabetesService {
 
     private boolean isPatientInDanger(char sex, int age, int foundedKeyword){
         if (sex == 'M' && age < 30 && foundedKeyword == 3){
-
             return true;
         }
 
         if (sex == 'F' && age < 30 && foundedKeyword == 4){
-
             return true;
         }
 
         if (age >= 30 && foundedKeyword == 8){
-
             return true;
         }
 
@@ -99,26 +95,19 @@ public class DiabetesService {
     }
 
     private boolean isPatientBorderline(int age, int foundedKeyword){
-        if (age >= 30 && foundedKeyword == 2){
-
-            return true;
-        }
-        return false;
+        return age >= 30 && foundedKeyword == 2;
     }
 
     private boolean isPatientEarlyOnset(char sex, int age, int foundedKeyword){
         if (sex == 'M' && age < 30 && foundedKeyword == 5){
-
             return true;
         }
 
         if (sex == 'F' && age < 30 && foundedKeyword == 7){
-
             return true;
         }
 
         if (sex == 'F' && age >= 30 && foundedKeyword >= 8){
-
             return true;
         }
 
