@@ -5,6 +5,7 @@ import com.noelh.mediscreendiabetes.beans.PatientBean;
 import com.noelh.mediscreendiabetes.enumeration.RiskLevelEnum;
 import com.noelh.mediscreendiabetes.proxies.MediscreenNoteProxy;
 import com.noelh.mediscreendiabetes.proxies.MediscreenPatientProxy;
+import feign.FeignException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -37,7 +38,7 @@ public class DiabetesService {
         this.mediscreenNoteProxy = mediscreenNoteProxy;
     }
 
-    public RiskLevelEnum getDiabetesRiskLevel(Long id) {
+    public RiskLevelEnum getDiabetesRiskLevel(Long id) throws FeignException.NotFound {
 
         PatientBean patient = mediscreenPatientProxy.getPatientById(id);
 

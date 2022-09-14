@@ -232,16 +232,4 @@ class DiabetesServiceTest {
         assertThat(result).isEqualTo(RiskLevelEnum.EARLY_ONSET);
     }
 
-//    @Test
-//    public void getDiabetesRiskLevel_Should_Throw_FeignException(){
-//        //Given
-//
-//
-//        //When
-////        diabetesService.getDiabetesRiskLevel(1L);
-//
-//        //Then
-////        assertThat()
-//    }
-
 }
