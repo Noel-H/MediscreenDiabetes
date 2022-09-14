@@ -2,6 +2,7 @@ package com.noelh.mediscreendiabetes.controller;
 
 import com.noelh.mediscreendiabetes.enumeration.RiskLevelEnum;
 import com.noelh.mediscreendiabetes.service.DiabetesService;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class DiabetesController {
         log.info("GET /diabetes/check/{}", id);
         try {
             return ResponseEntity.ok(diabetesService.getDiabetesRiskLevel(id));
-        } catch (Exception e) {
+        } catch (FeignException.NotFound e) {
             log.error("GET /diabetes/check/{} : [ERROR] = {}", id, e.getMessage());
             return ResponseEntity.notFound().build();
         }
