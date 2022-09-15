@@ -47,10 +47,8 @@ public class DiabetesService {
         char sex = patient.getSex();
 
         int age = Period.between(patient.getDateOfBirth(),LocalDate.now()).getYears();
-        System.out.println(age);
 
         int foundedKeyword = countKeywordFound(noteList);
-        System.out.println(foundedKeyword);
 
         if (isPatientInDanger(sex, age, foundedKeyword)){
             return RiskLevelEnum.IN_DANGER;
@@ -88,11 +86,7 @@ public class DiabetesService {
             return true;
         }
 
-        if (age >= 30 && foundedKeyword == 8){
-            return true;
-        }
-
-        return false;
+        return age >= 30 && foundedKeyword == 8;
     }
 
     private boolean isPatientBorderline(int age, int foundedKeyword){
@@ -108,10 +102,6 @@ public class DiabetesService {
             return true;
         }
 
-        if (sex == 'F' && age >= 30 && foundedKeyword >= 8){
-            return true;
-        }
-
-        return false;
+        return sex == 'F' && age >= 30 && foundedKeyword >= 8;
     }
 }
