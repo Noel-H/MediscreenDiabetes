@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Diabetes Controller
+ */
 @Slf4j
 @RestController
 @RequestMapping("/diabetes")
@@ -20,10 +23,19 @@ public class DiabetesController {
 
     private final DiabetesService diabetesService;
 
+    /**
+     * Diabetes controller constructor
+     * @param diabetesService used to perform operation
+     */
     public DiabetesController(DiabetesService diabetesService){
         this.diabetesService = diabetesService;
     }
 
+    /**
+     * Get a risk level by an id
+     * @param id used to get the risk level
+     * @return a risk level or an error if the id is not found
+     */
     @ApiOperation("Récupère le niveau de risque de diabète grâce à un id donné")
     @GetMapping("/check/{id}")
     public ResponseEntity<RiskLevelEnum> getDiabetesRiskLevel(@PathVariable("id") Long id) {

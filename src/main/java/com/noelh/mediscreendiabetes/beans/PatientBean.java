@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * Patient Bean
+ */
 @Data
 public class PatientBean {
 

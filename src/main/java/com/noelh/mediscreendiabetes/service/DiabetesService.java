@@ -13,6 +13,9 @@ import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Diabetes Service
+ */
 @Service
 public class DiabetesService {
 
@@ -33,11 +36,22 @@ public class DiabetesService {
             "Réaction",
             "Anticorps");
 
+    /**
+     * Diabetes service constructor
+     * @param mediscreenPatientProxy is a proxy to the patient api
+     * @param mediscreenNoteProxy is a proxy to the note api
+     */
     public DiabetesService(MediscreenPatientProxy mediscreenPatientProxy, MediscreenNoteProxy mediscreenNoteProxy){
         this.mediscreenPatientProxy = mediscreenPatientProxy;
         this.mediscreenNoteProxy = mediscreenNoteProxy;
     }
 
+    /**
+     * Get a risk level of diabetes by an id
+     * @param id used to get the risk level
+     * @return a risk level
+     * @throws FeignException.NotFound when the id is not found
+     */
     public RiskLevelEnum getDiabetesRiskLevel(Long id) throws FeignException.NotFound {
 
         PatientBean patient = mediscreenPatientProxy.getPatientById(id);
@@ -65,6 +79,11 @@ public class DiabetesService {
         return RiskLevelEnum.NONE;
     }
 
+    /**
+     * Count the number of keyword found in a list of note
+     * @param noteList used to check the keyword
+     * @return the number of keyword found
+     */
     private int countKeywordFound(List<NoteBean> noteList) {
         int foundedKeyword = 0;
 
@@ -77,6 +96,13 @@ public class DiabetesService {
         return foundedKeyword;
     }
 
+    /**
+     * Check if the patient is in danger
+     * @param sex used to check if the patient is in danger
+     * @param age used to check if the patient is in danger
+     * @param foundedKeyword the number of keyword found previously
+     * @return true if the given information match the criteria or false if it doesn't
+     */
     private boolean isPatientInDanger(char sex, int age, int foundedKeyword){
         if (sex == 'M' && age < 30 && foundedKeyword == 3){
             return true;
@@ -89,10 +115,23 @@ public class DiabetesService {
         return age >= 30 && foundedKeyword == 8;
     }
 
+    /**
+     * Check if the patient is borderline
+     * @param age used to check if the patient is borderline
+     * @param foundedKeyword the number of keyword found previously
+     * @return true if the given information match the criteria or false if it doesn't
+     */
     private boolean isPatientBorderline(int age, int foundedKeyword){
         return age >= 30 && foundedKeyword == 2;
     }
 
+    /**
+     * Check if the patient is early onset
+     * @param sex used to check if the patient is early onset
+     * @param age used to check if the patient is early onset
+     * @param foundedKeyword the number of keyword found previously
+     * @return true if the given information match the criteria or false if it doesn't
+     */
     private boolean isPatientEarlyOnset(char sex, int age, int foundedKeyword){
         if (sex == 'M' && age < 30 && foundedKeyword == 5){
             return true;
